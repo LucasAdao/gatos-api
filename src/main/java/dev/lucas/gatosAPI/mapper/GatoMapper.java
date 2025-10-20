@@ -46,8 +46,6 @@ public class GatoMapper {
         if (patchGato.idade() != null) {
             gato.setIdade(patchGato.idade());
         }
-
-
     }
 
 }
