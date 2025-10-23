@@ -3,6 +3,8 @@ package dev.lucas.gatosAPI.service;
 import dev.lucas.gatosAPI.dtos.GetGato;
 import dev.lucas.gatosAPI.dtos.PatchGato;
 import dev.lucas.gatosAPI.dtos.PostGato;
+import dev.lucas.gatosAPI.exceptions.GatoNotFoundException;
+import dev.lucas.gatosAPI.exceptions.GatoNotNullException;
 import dev.lucas.gatosAPI.mapper.GatoMapper;
 import dev.lucas.gatosAPI.model.Gato;
 import dev.lucas.gatosAPI.repository.GatoRepository;
@@ -32,12 +34,12 @@ public class GatoService {
 
     public GetGato buscarGatoPorId(Short id){
         Optional<Gato> gato = repository.findById(id);
-        return gato.map(mapper::toGetGato).orElse(null);
+        return gato.map(mapper::toGetGato).orElseThrow(() -> new GatoNotFoundException(id));
     }
 
     public GetGato cadastrarGato(PostGato postGato){
         if(postGato == null){
-            throw new IllegalArgumentException("O gato não pode ser nulo");
+            throw new GatoNotNullException();
         }
         Gato gato = mapper.toGato(postGato);
         Gato gatoSalvo = repository.save(gato);
