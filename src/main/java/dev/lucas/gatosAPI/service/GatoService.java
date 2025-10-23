@@ -47,17 +47,15 @@ public class GatoService {
     }
 
     public GetGato atualizarGato(Short id, PatchGato patchGato){
-        Optional<Gato> dadosAntigos = repository.findById(id);
-        if(dadosAntigos.isPresent()){
-        Gato dadosParaAtualizar = dadosAntigos.get();
+        if(patchGato == null){
+            throw new GatoNotNullException();
+        }
 
-        mapper.atualizarGatoComPatch(dadosParaAtualizar, patchGato);
-
-        Gato gatoAtualizado = repository.save(dadosParaAtualizar);
+        Gato gatoParaAtualizar = repository.findById(id).orElseThrow(() -> new GatoNotFoundException(id));
+        mapper.atualizarGatoComPatch(gatoParaAtualizar, patchGato);
+        Gato gatoAtualizado = repository.save(gatoParaAtualizar);
 
         return mapper.toGetGato(gatoAtualizado);
-        }
-        return null;
     }
 
     public void deletarGato(Short id){
