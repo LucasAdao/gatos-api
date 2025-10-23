@@ -9,6 +9,7 @@ public class Gato {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_Gato")
     private Short id;
 
     @Column( nullable = false , name = "nome", length = 50)
