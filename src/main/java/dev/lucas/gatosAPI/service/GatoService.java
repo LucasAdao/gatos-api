@@ -47,7 +47,7 @@ public class GatoService {
     }
 
     public GetGato atualizarGato(Short id, PatchGato patchGato){
-        if(patchGato == null){
+        if(patchGato  == null ){
             throw new GatoNotNullException();
         }
 
@@ -59,6 +59,8 @@ public class GatoService {
     }
 
     public void deletarGato(Short id){
+        repository.findById(id)
+                .orElseThrow(() -> new GatoNotFoundException(id));
         repository.deleteById(id);
     }
 
