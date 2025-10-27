@@ -43,7 +43,7 @@ public class GatoService {
         }
         Gato gato = mapper.toGato(postGato);
         Gato gatoSalvo = repository.save(gato);
-        return mapper.toGetGato(gato);
+        return mapper.toGetGato(gatoSalvo);
     }
 
     public GetGato atualizarGato(Short id, PatchGato patchGato){
