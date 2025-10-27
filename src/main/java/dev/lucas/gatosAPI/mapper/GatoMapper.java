@@ -4,6 +4,7 @@ import dev.lucas.gatosAPI.dtos.GetGato;
 import dev.lucas.gatosAPI.dtos.PatchGato;
 import dev.lucas.gatosAPI.dtos.PostGato;
 import dev.lucas.gatosAPI.model.Gato;
+import dev.lucas.gatosAPI.model.Sexo;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +18,8 @@ public class GatoMapper {
             gato.getId(),
             gato.getNome(),
             gato.getRaca(),
-            gato.getIdade()
+            gato.getIdade(),
+            gato.getSexo().nome
         );
     }
 
@@ -29,6 +31,11 @@ public class GatoMapper {
         gato.setNome( postgato.nome() );
         gato.setRaca( postgato.raca() );
         gato.setIdade( postgato.idade() );
+        if(postgato.sexo().equalsIgnoreCase("fêmea"))
+            gato.setSexo(Sexo.F);
+        else if( postgato.sexo().equalsIgnoreCase("macho")){
+            gato.setSexo(Sexo.M);
+        }
         return gato;
     }
 
@@ -45,6 +52,13 @@ public class GatoMapper {
         }
         if (patchGato.idade() != null) {
             gato.setIdade(patchGato.idade());
+        }
+        if (patchGato.sexo() != null){
+            if(patchGato.sexo().equalsIgnoreCase("fêmea"))
+                gato.setSexo(Sexo.F);
+            else if( patchGato.sexo().equalsIgnoreCase("macho")){
+                gato.setSexo(Sexo.M);
+            }
         }
     }
 
